@@ -1,9 +1,14 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from flask import Flask
 
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"DevSecOps Pipeline by Nurmukhammed")
+app = Flask(__name__)
 
-HTTPServer(("", 8080), Handler).serve_forever()
+@app.route("/")
+def home():
+    return "DevSecOps Pipeline by Nurmukhammed"
+
+@app.route("/health")
+def health():
+    return {"status": "ok"}
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
